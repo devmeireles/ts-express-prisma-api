@@ -1,0 +1,87 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model user {
+  id          Int        @id @default(autoincrement())
+  email       String     @unique
+  name        String?
+  properties  property[]
+  profile_img media?     @relation(fields: [media_id], references: [id])
+  media_id    Int?
+  review      review[]
+}
+
+model property {
+  id       Int                @id @default(autoincrement())
+  name     String?
+  owner    user               @relation(fields: [owner_id], references: [id])
+  owner_id Int
+  media    property_media[]
+  reviews  review[]
+  features property_feature[]
+  perks    property_perk[]
+}
+
+model media {
+  id             Int              @id @default(autoincrement())
+  source         String?
+  property_media property_media[]
+  user           user[]
+}
+
+model property_media {
+  id          Int       @id @default(autoincrement())
+  property    property? @relation(fields: [property_id], references: [id])
+  property_id Int?
+  media       media?    @relation(fields: [media_id], references: [id])
+  media_id    Int?
+}
+
+model review {
+  id          Int       @id @default(autoincrement())
+  review      String?
+  rating      String?
+  property    property? @relation(fields: [property_id], references: [id])
+  property_id Int?
+  owner       user      @relation(fields: [owner_id], references: [id])
+  owner_id    Int
+}
+
+model feature {
+  id               Int                @id @default(autoincrement())
+  name             String?
+  active           Boolean
+  property_feature property_feature[]
+}
+
+model perk {
+  id            Int             @id @default(autoincrement())
+  name          String?
+  active        Boolean
+  property_perk property_perk[]
+}
+
+model property_feature {
+  id          Int       @id @default(autoincrement())
+  property    property? @relation(fields: [property_id], references: [id])
+  property_id Int?
+  feature     feature?  @relation(fields: [feature_id], references: [id])
+  feature_id  Int?
+}
+
+model property_perk {
+  id          Int       @id @default(autoincrement())
+  property    property? @relation(fields: [property_id], references: [id])
+  property_id Int?
+  perk        perk?     @relation(fields: [perk_id], references: [id])
+  perk_id     Int?
+}
