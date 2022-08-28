@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { UserInterface } from "@interfaces/user.interface";
+import { UserEntity } from "@entities/user.entity";
 
 const prisma = new PrismaClient();
 
@@ -20,7 +21,12 @@ export class UserRepository implements UserInterface {
     return await prisma.user.findMany();
   }
 
-  create(user: Record<string, any>): Promise<Record<string, any>> {
-    throw new Error("Method not implemented.");
+  async create(user: UserEntity): Promise<Record<string, any>> {
+    return await prisma.user.create({
+      data: {
+        name: user.name,
+        email: user.email,
+      },
+    });
   }
 }

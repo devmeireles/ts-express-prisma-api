@@ -18,6 +18,7 @@ module.exports = {
                 '@config': './src/config',
                 '@entities': './src/entities',
                 '@repositories': './src/repositories',
+                '@localtypes': './src/types',
                 '@controllers': './src/controllers',
                 '@utils': './src/utils',
                 '@interfaces': './src/interfaces',

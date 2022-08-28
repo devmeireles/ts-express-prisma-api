@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { RESPONSE_TYPES } from "@config/enums";
 import { UserRepository } from "@repositories/user.repositoy";
 import { BaseController } from "@controllers/base.controller";
+import { UserEntity } from "@entities/user.entity";
 
 export class UserController extends BaseController {
   constructor(private userRepository: UserRepository) {
@@ -25,6 +26,34 @@ export class UserController extends BaseController {
       return this.formatReponse({
         res,
         data: user,
+        type: RESPONSE_TYPES.SUCCESS,
+      });
+    } catch (error) {
+      return this.formatReponse({
+        res,
+        message: error as TypeError,
+        type: RESPONSE_TYPES.ERROR,
+      });
+    }
+  }
+
+  public async save(req: Request, res: Response): Promise<Response> {
+    try {
+      const { name, email } = req.body;
+
+      const user = new UserEntity({
+        id: "1",
+        name,
+        email,
+        created_at: String(new Date()),
+        updated_at: String(new Date()),
+      });
+
+      const newUser = await this.userRepository.create(user);
+
+      return this.formatReponse({
+        res,
+        data: newUser,
         type: RESPONSE_TYPES.SUCCESS,
       });
     } catch (error) {

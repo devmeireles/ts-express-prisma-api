@@ -24,6 +24,9 @@
       "@repositories/*": [
         "./src/repositories/*"
       ],
+      "@localtypes/*": [
+        "./src/types/*"
+      ],
       "@entities/*": [
         "./src/entities/*"
       ],

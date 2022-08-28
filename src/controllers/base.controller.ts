@@ -14,18 +14,19 @@ export class BaseController {
 
     if (type === RESPONSE_TYPES.SUCCESS) {
       return res.status(200).json({
-        success: false,
+        success: true,
         data,
       });
     } else {
-      const formatedMessage =
-        message instanceof TypeError
-          ? message.cause || message.message
-          : message;
+      console.log(typeof message, message.toString());
+      // const formatedMessage =
+      //   message instanceof TypeError
+      //     ? message.cause || message.message
+      //     : message;
 
       return res.status(400).json({
         success: false,
-        message: formatedMessage,
+        message: message.toString(),
       });
     }
   }
