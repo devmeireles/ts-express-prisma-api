@@ -1,34 +1,35 @@
-import express from 'express'
-import cors from 'cors'
-import * as dotenv from 'dotenv'
-import { PrismaClient } from '@prisma/client'
-import { userRouter } from './routes/user.route'
+import "module-alias/register";
+import express from "express";
+import cors from "cors";
+import * as dotenv from "dotenv";
+import { PrismaClient } from "@prisma/client";
+import { userRouter } from "./routes/user.route";
 
-dotenv.config()
+dotenv.config();
 
 class App {
-    public express: express.Application
-    public connection: PrismaClient
+  public express: express.Application;
+  public connection: PrismaClient;
 
-    constructor() {
-        this.express = express()
-        this.connection = new PrismaClient()
-        this.middlewares()
-        this.routes()
-    }
+  constructor() {
+    this.express = express();
+    this.connection = new PrismaClient();
+    this.middlewares();
+    this.routes();
+  }
 
-    private middlewares(): void {
-        this.express.use(express.json())
-        this.express.use(cors())
-    }
+  private middlewares(): void {
+    this.express.use(express.json());
+    this.express.use(cors());
+  }
 
-    public getConnection() {
-        return this.connection;
-    }
+  public getConnection() {
+    return this.connection;
+  }
 
-    private routes(): void {
-        this.express.use('/user', userRouter)
-    }
+  private routes(): void {
+    this.express.use("/user", userRouter);
+  }
 }
 
-export default new App().express
+export default new App().express;

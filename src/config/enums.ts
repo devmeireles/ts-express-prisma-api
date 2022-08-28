@@ -1,1 +1,4 @@
-export enum RESPONSE_TYPES { 'ERROR', 'SUCCESS' } 
+export enum RESPONSE_TYPES {
+  "ERROR",
+  "SUCCESS",
+}
