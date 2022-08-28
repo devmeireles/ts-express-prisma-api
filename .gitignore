@@ -6,3 +6,4 @@ package-lock.json
 
 prisma/*.db
 prisma/*/*toml
+test/coverage/*
