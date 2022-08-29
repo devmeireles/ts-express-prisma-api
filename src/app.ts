@@ -6,6 +6,7 @@ import { PrismaClient } from "@prisma/client";
 import * as swagger from "express-jsdoc-swagger";
 
 import { userRouter } from "./routes/user.route";
+import { authRouter } from "./routes/auth.route";
 import { swaggerOptions } from "@config/swagger";
 
 dotenv.config();
@@ -33,6 +34,7 @@ class App {
 
   private routes(): void {
     this.express.use("/user", userRouter);
+    this.express.use("/auth", authRouter);
   }
 }
 

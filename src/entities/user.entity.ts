@@ -1,7 +1,9 @@
 import { v4 as uuid } from "uuid";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 import { BaseEntity } from "./base.entity";
+import { JWT_SECRET } from "@config/enums";
 
 /**
  * A User type
@@ -30,5 +32,14 @@ export class UserEntity extends BaseEntity {
     if (this.password) {
       this.password = await bcrypt.hash(this.password, 10);
     }
+  }
+
+  async compareHash?(unencryptedPassword: string): Promise<boolean> {
+    console.log(this.password, unencryptedPassword);
+    return bcrypt.compareSync(unencryptedPassword, this.password);
+  }
+
+  generateToken?(): string {
+    return jwt.sign({ id: this.id, email: this.email }, JWT_SECRET, { expiresIn: "1h" });
   }
 }

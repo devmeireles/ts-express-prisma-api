@@ -67,4 +67,34 @@ export class UserController extends BaseController {
       });
     }
   }
+
+  public async login(req: Request, res: Response): Promise<Response> {
+    try {
+      const { email, password } = req.body;
+
+      const currentUser = await this.userRepository.getByEmail(email);
+      if (!currentUser) throw new Error("User not found");
+
+      const user = new UserEntity({ ...currentUser })
+
+      const hashIsTrue: boolean = await user.compareHash(password);
+      if (!hashIsTrue) throw new Error("Wrong login data");
+
+      const token: string = user.generateToken();
+
+      return this.formatReponse({
+        res,
+        data: { ...user, token },
+        type: RESPONSE_TYPES.SUCCESS,
+      });
+
+    } catch (error) {
+
+      return this.formatReponse({
+        res,
+        message: error as TypeError,
+        type: RESPONSE_TYPES.ERROR,
+      });
+    }
+  }
 }

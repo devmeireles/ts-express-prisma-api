@@ -16,7 +16,7 @@ const userController = new UserController(userRepository);
 
 /**
  * GET /user
- * @summary This is the summary of the endpoint
+ * @summary Returns a list of users
  * @tags user
  * @return {SuccessReponseType} 200 - success response
  * @return {ErrorReponseType} 400 - Bad request response
@@ -27,7 +27,7 @@ userRouter.get("/", (req: Request, res: Response) => {
 
 /**
  * GET /user/{id}
- * @summary This is the summary of the endpoint
+ * @summary Gets an user by id
  * @tags user
  * @param {string} id.path - id param description
  * @return {SuccessReponseType} 200 - success response
