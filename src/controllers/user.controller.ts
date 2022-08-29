@@ -39,14 +39,17 @@ export class UserController extends BaseController {
 
   public async save(req: Request, res: Response): Promise<Response> {
     try {
-      const { name, email } = req.body;
+      const { name, email, password } = req.body;
+
+      const userAlreadyExists = await this.userRepository.getByEmail(email);
+      if (userAlreadyExists) throw new Error("User already exists.");
 
       const user = new UserEntity({
-        id: "1",
         name,
         email,
-        created_at: String(new Date()),
-        updated_at: String(new Date()),
+        password,
+        created_at: new Date().getTime(),
+        updated_at: new Date().getTime(),
       });
 
       const newUser = await this.userRepository.create(user);

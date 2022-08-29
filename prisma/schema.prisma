@@ -11,20 +11,21 @@ datasource db {
 }
 
 model user {
-  id          Int        @id @default(autoincrement())
+  id          String     @id @default(uuid())
   email       String     @unique
   name        String?
+  password    String
   properties  property[]
   profile_img media?     @relation(fields: [media_id], references: [id])
-  media_id    Int?
+  media_id    String?
   review      review[]
 }
 
 model property {
-  id       Int                @id @default(autoincrement())
+  id       String             @id @default(uuid())
   name     String?
   owner    user               @relation(fields: [owner_id], references: [id])
-  owner_id Int
+  owner_id String
   media    property_media[]
   reviews  review[]
   features property_feature[]
@@ -32,56 +33,56 @@ model property {
 }
 
 model media {
-  id             Int              @id @default(autoincrement())
+  id             String           @id @default(uuid())
   source         String?
   property_media property_media[]
   user           user[]
 }
 
 model property_media {
-  id          Int       @id @default(autoincrement())
+  id          String    @id @default(uuid())
   property    property? @relation(fields: [property_id], references: [id])
-  property_id Int?
+  property_id String?
   media       media?    @relation(fields: [media_id], references: [id])
-  media_id    Int?
+  media_id    String?
 }
 
 model review {
-  id          Int       @id @default(autoincrement())
+  id          String    @id @default(uuid())
   review      String?
   rating      String?
   property    property? @relation(fields: [property_id], references: [id])
-  property_id Int?
+  property_id String?
   owner       user      @relation(fields: [owner_id], references: [id])
-  owner_id    Int
+  owner_id    String
 }
 
 model feature {
-  id               Int                @id @default(autoincrement())
+  id               String             @id @default(uuid())
   name             String?
   active           Boolean
   property_feature property_feature[]
 }
 
 model perk {
-  id            Int             @id @default(autoincrement())
+  id            String          @id @default(uuid())
   name          String?
   active        Boolean
   property_perk property_perk[]
 }
 
 model property_feature {
-  id          Int       @id @default(autoincrement())
+  id          String    @id @default(uuid())
   property    property? @relation(fields: [property_id], references: [id])
-  property_id Int?
+  property_id String?
   feature     feature?  @relation(fields: [feature_id], references: [id])
-  feature_id  Int?
+  feature_id  String?
 }
 
 model property_perk {
-  id          Int       @id @default(autoincrement())
+  id          String    @id @default(uuid())
   property    property? @relation(fields: [property_id], references: [id])
-  property_id Int?
+  property_id String?
   perk        perk?     @relation(fields: [perk_id], references: [id])
-  perk_id     Int?
+  perk_id     String?
 }

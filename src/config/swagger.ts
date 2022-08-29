@@ -13,7 +13,7 @@ export const swaggerOptions = {
       },
     },
     baseDir: __dirname,
-    filesPattern: "./**/*.ts",
+    filesPattern: "../**/*.ts",
     swaggerUIPath: "/docs",
     exposeSwaggerUI: true,
     exposeApiDocs: false,

@@ -39,11 +39,11 @@ userRouter.get("/:id", (req: Request, res: Response) => {
 
 /**
  * POST /user
- * @summary This is the summary of the endpoint
+ * @summary Creates an user
  * @tags user
  * @param {UserEntity} request.body.required - user info
  * @return {object} 200 - user response
- * @return {SuccessReponseType} 200 - success response
+ * @return {SuccessReponseType} 201 - success response
  * @return {ErrorReponseType} 400 - Bad request response
  */
 userRouter.post("/", (req: Request, res: Response) => {

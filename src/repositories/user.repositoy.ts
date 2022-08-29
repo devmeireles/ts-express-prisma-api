@@ -12,7 +12,15 @@ export class UserRepository implements UserInterface {
   async getByID(id: any): Promise<any> {
     return await prisma.user.findUniqueOrThrow({
       where: {
-        id: Number(id),
+        id: id,
+      },
+    });
+  }
+
+  async getByEmail(email: string): Promise<any> {
+    return await prisma.user.findUnique({
+      where: {
+        email: email,
       },
     });
   }
@@ -22,10 +30,12 @@ export class UserRepository implements UserInterface {
   }
 
   async create(user: UserEntity): Promise<Record<string, any>> {
+    await user.hashPassword();
     return await prisma.user.create({
       data: {
         name: user.name,
         email: user.email,
+        password: user.password
       },
     });
   }

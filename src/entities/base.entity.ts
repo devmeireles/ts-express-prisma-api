@@ -1,9 +1,8 @@
 export class BaseEntity {
-  public readonly id!: string;
-  public created_at!: string;
-  public updated_at!: string;
+  public created_at!: number;
+  public updated_at!: number;
 
-  constructor(props: BaseEntity, id?: string) {
+  constructor(props: BaseEntity) {
     Object.assign(this, props);
   }
 }
