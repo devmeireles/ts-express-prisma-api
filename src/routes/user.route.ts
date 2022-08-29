@@ -3,6 +3,7 @@
 import { Request, Response, Router } from "express";
 import { UserController } from "@controllers/user.controller";
 import { UserRepository } from "@repositories/user.repositoy";
+import checkJWT from "@middlewares/checkJWT";
 
 import {
   ErrorReponseType,
@@ -18,10 +19,11 @@ const userController = new UserController(userRepository);
  * GET /user
  * @summary Returns a list of users
  * @tags user
+ * @security BearerAuth
  * @return {SuccessReponseType} 200 - success response
  * @return {ErrorReponseType} 400 - Bad request response
  */
-userRouter.get("/", (req: Request, res: Response) => {
+userRouter.get("/", [checkJWT], (req: Request, res: Response) => {
   return userController.index(req, res);
 });
 

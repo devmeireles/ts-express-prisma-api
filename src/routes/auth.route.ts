@@ -8,7 +8,13 @@ import {
     ErrorReponseType,
     SuccessReponseType,
 } from "@localtypes/response.type";
-import { UserEntity } from "@src/entities/user.entity";
+
+/**
+ * A LoginReference type
+ * @typedef {object} LoginReference
+ * @property {string} email.required - The email
+ * @property {string} password.required - The password
+ */
 
 const authRouter = Router();
 const userRepository = new UserRepository();
@@ -18,6 +24,7 @@ const userController = new UserController(userRepository);
  * POST /auth/login
  * @summary Does a login action
  * @tags auth
+ * @param {LoginReference} request.body.required - login info
  * @return {SuccessReponseType} 200 - success response
  * @return {ErrorReponseType} 400 - Bad request response
  */
